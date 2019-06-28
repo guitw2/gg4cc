@@ -348,73 +348,95 @@ var quickActionsStyle=`
 		}
 	</style>
 `
-// title, link, keywords
-var links = [["General Configuration","/wiki/admin/viewgeneralconfig.action","site configuration internal attachment size formatting international date title general configuration"],
-	["Further Configuration","/wiki/admin/viewspacesconfig.action","homepage thread comment like draft quick navigation further configuration"],
-	["Language Configuration","/wiki/admin/viewlanguage.action","default language language configuration idiom"],
-	["Shortcut Links","/wiki/admin/browseshortcuts.action","shortcut link links"],
-	["Global Templates and Blueprints ","/wiki/pages/templates2/listglobaltemplates.action","template pages spaces blueprint  global templates and blueprints"],
-	["Import Templates ","/wiki/admin/plugins/templatePackage/configurePlugin.action","import templates template"],
-	["Recommended Updates Email ","/wiki/admin/dailysummary/admin.action","recommended updates email"],
-	["PDF Export Language Support","/wiki/admin/flyingpdf/configurepdflanguagesupport.action","pdf export language support idiom"],
-	["Code Macro Administration","/wiki/admin/plugins/newcode/configure.action","code macro administration theme code language java html php"],
-	["Find New Apps","/wiki/plugins/servlet/ac/com.atlassian.confluence.emcee/discover","find new apps marketplace add on add-on extension extension app integration integrations"],
-	["Manage apps","/wiki/plugins/servlet/upm?source=side_nav_manage_addons","manage apps marketplace add on add-on extension extension app integration integrations"],
-	["Space Settings ","/wiki/spaces/viewspacesummary.action?key=TEST","space settings"],
-	["Delete Space ","/wiki/spaces/removespace.action?key=TEST","delete space"],
-	["Permissions","/wiki/spaces/spacepermissions.action?key=TEST","permissions permission "],
-	["Restrictions","/wiki/pages/listpermissionpages.action?key=TEST","restrictions restriction"],
-	["Template","/wiki/pages/templates2/listpagetemplates.action?key=TEST","template templates"],
-	["Reorder pages","/wiki/pages/reorderpages.action?key=CC","reorder page pages"],
-	["Orphaned Pages","/wiki/pages/listorphanedpages.action?key=CC","orphaned page pages"],
-	["Undefined Pages","/wiki/pages/listundefinedpages.action?key=CC","undefined page pages"],
-	["Attachments","/wiki/spaces/listattachmentsforspace.action?key=CC","attachment attachments file files"],
-	["Trash","/wiki/pages/viewtrash.action?key=CC","trash"],
-	["Export","/wiki/spaces/exportspacewelcome.action?key=CC","export"],
-	["HTML Export","/wiki/spaces/exportspacewelcome.action?key=CC","html export "],
-	["XML Export ","/wiki/spaces/exportspacewelcome.action?key=CC","xml export"],
-	["PDF Export","/wiki/spaces/exportspacewelcome.action?key=CC","pdf export"],
-	["RSS Feed","/wiki/spaces/listrssfeeds.action?key=CC","rss feed feeds"],
-	["Themes","/wiki/spaces/choosetheme.action?key=CC","theme themes"],
-	["PDF Layout","/wiki/spaces/flyingpdf/viewpdflayoutconfig.action?key=CC","pdf layout"],
-	["Stylesheet","/wiki/spaces/flyingpdf/viewpdfstyleconfig.action?key=CC","stylesheet"],
-	["Header & Footer","/wiki/spaces/custompagecontent.action?key=CC","header footer header and footer"],
-	["PDF Stylesheet","/wiki/spaces/flyingpdf/viewpdfstyleconfig.action?key=CC","pdf stylesheet stylesheets"],
-	["Integrations ","/wiki/spaces/listentitylinks.action?typeId=com.atlassian.applinks.api.application.confluence.ConfluenceSpaceEntityType&key=CC","integrations integration"],
-	["App Links","/wiki/spaces/listentitylinks.action?typeId=com.atlassian.applinks.api.application.confluence.ConfluenceSpaceEntityType&key=CC","application application links application link links link"],
-	["Slack","/wiki/plugins/atlassian-connect/space-tools-tab.action?key=CC&addonKey=confluence-chats-integration&moduleKey=space-config-link","slack "],
-	["Users","/admin/users","users user people"],
-	["Groups ","/admin/groups","groups group"],
-	["Security Configuration","/wiki/admin/viewsecurityconfig.action","security security configuration"],
-	["Global Permissions","/wiki/admin/permissions/globalpermissions.action","global permissions permission"],
-	["Space Permissions","/wiki/admin/permissions/viewdefaultspacepermissions.action","space permissions permission"],
-	["Themes","/wiki/admin/choosetheme.action","themes theme customization custom layout"],
-	["Color Scheme","/wiki/admin/lookandfeel.action","color scheme colors customization custom"],
-	["PDF Layout ","/wiki/admin/flyingpdf/viewpdflayoutconfig.action","pdf layout formatting title page header footer css"],
-	["PDF Stylesheet","/wiki/admin/flyingpdf/viewpdfstyleconfig.action","pdf stylesheet export css"],
-	["Site Logo and Favicon","/wiki/admin/sitelogo/view-sitelogo.action","site logo favicon icon avatar title"],
-	["Header and Footer","/wiki/admin/custompagecontent.action","header footer site look"],
-	["Default Space Logo ","/wiki/admin/configuredefaultspacelogo.action","default space logo"],
-	["Macro Usage","/wiki/admin/pluginusage.action","macro usage macros"],
-	["Audit Log","/wiki/admin/auditlogging.action","audit log logs"],
-	["Backup Manager","/wiki/plugins/servlet/ondemandbackupmanager/admin","backup manager restore export"],
-	["Import Spaces","/wiki/admin/importspace/importconfluencespace.action","import spaces xml export"],
-	["Application Links","/wiki/plugins/servlet/applinks/listApplicationLinks","application links applications link"],
-	["JIRA Macro Repair","/wiki/admin/jim-validator/view.action","jira macro repair"],
-	["Application Navigator","/wiki/plugins/servlet/customize-application-navigator","application links applications link quick access"],
-	["People","/people/search","people directory profiles"],
-	["Recently Worked on","/wiki/my/recent-work","recently worked on recent last previous"],
-	["Recently Visited","/wiki/my/recently-visited","recently visited recent view viewed"],
-	["Drafts","/wiki/my/drafts","drafts sketch"],
-	["Saved for Later","/wiki/my/saved-for-later","saved for later star starred bookmark bookmarked"],
-	["Space Directory","/wiki/spacedirectory/view.action","space directory spaces"],
-	["Online help","https://confluence.atlassian.com/display/ConfCloud/","online help documentation"],
-	["Get the Mobile app","https://confluence.app.link/lXR9osLBRC","get the mobile app"],
-	["Feed Builder","/wiki/dashboard/configurerssfeed.action","feed builder rss"],
-	["Site Status","https://status.atlassian.com/","site status system down help"],
-	["What's New","https://confluence.atlassian.com/cloud/blog","what's new blog post"],
-	["Terms of Service ","http://www.atlassian.com/hosted/terms.jsp","terms service security legal privacy policy policies gdpr data"],
-	["Privacy Policy","https://www.atlassian.com/legal/privacy-policy","privacy policy security legal policies gdpr data"]];
+
+var	spaceKey=null;
+var	insideSpace=false;
+
+function refreshLinks(){
+
+	if(window.location.href.match("/spaces/(.+)/")){ //if inside a space, get the space key
+		spaceKey=window.location.href.match("/spaces/(.+)/")[1].split("/")[0];
+		insideSpace=true;
+	}
+	else if(window.location.href.match("key=(.+)")){
+		spaceKey=window.location.href.match("key=(.+)")[1];
+		insideSpace=true;
+	}
+
+	console.log(insideSpace);
+	console.log(spaceKey)
+
+	// title, link, keywords, link inside of a space?
+	links=[["General Configuration","/wiki/admin/viewgeneralconfig.action","site configuration internal attachment size formatting international date title general settings",false],
+	    ["Global Permissions","/wiki/admin/permissions/globalpermissions.action","global permissions permission anonymous",false],
+	    ["Security Configuration","/wiki/admin/viewsecurityconfig.action","security security configuration",false],
+	    ["All Space Permissions","/wiki/admin/permissions/viewdefaultspacepermissions.action","space permissions permission recover manage",false],
+	    ["Further Configuration","/wiki/admin/viewspacesconfig.action","homepage thread comment like draft quick navigation further configuration settings",false],
+	    ["Language Configuration","/wiki/admin/viewlanguage.action","default language language configuration idiom",false],
+	    ["Shortcut Links","/wiki/admin/browseshortcuts.action","shortcut link links",false],
+	    ["Global Templates and Blueprints ","/wiki/pages/templates2/listglobaltemplates.action","template pages spaces blueprint  global templates and blueprints ",false],
+	    ["Space Directory","/wiki/spacedirectory/view.action","space directory spaces",false],
+	    ["Delete Space ","/wiki/spaces/removespace.action?key="+spaceKey,"delete space",true],
+	    ["Permissions","/wiki/spaces/spacepermissions.action?key="+spaceKey,"permissions permission ",true],
+	    ["Import Templates ","/wiki/admin/plugins/templatePackage/configurePlugin.action","import templates template",false],
+	    ["Export","/wiki/spaces/exportspacewelcome.action?key="+spaceKey,"export space",true],
+	    ["HTML Export","/wiki/spaces/exportspacewelcome.action?key="+spaceKey,"html export space",true],
+	    ["XML Export ","/wiki/spaces/exportspacewelcome.action?key="+spaceKey,"xml export space",true],
+	    ["Manage apps","/wiki/plugins/servlet/upm?source=side_nav_manage_addons","manage apps marketplace add on add-on extension extension app integration integrations",false],
+	    ["Find New Apps","/wiki/plugins/servlet/ac/com.atlassian.confluence.emcee/discover","find new apps marketplace add on add-on extension extension app integration integrations",false],
+	    ["PDF Export Language Support","/wiki/admin/flyingpdf/configurepdflanguagesupport.action","pdf export language support idiom",false],
+	    ["Backup Manager","/wiki/plugins/servlet/ondemandbackupmanager/admin","backup manager restore export",false],
+	    ["Code Macro Administration","/wiki/admin/plugins/newcode/configure.action","code macro administration code java html php",false],
+	    ["Slack","/wiki/plugins/atlassian-connect/space-tools-tab.action?key="+spaceKey+"&addonKey=confluence-chats-integration&moduleKey=space-config-link","slack space",true],
+	    ["Users","/admin/users","users user people",false],
+	    ["Groups ","/admin/groups","groups group",false],
+	    ["Content Indexing","/wiki/admin/search-indexes.action","content reindex index indexing",false],
+	    ["Themes","/wiki/admin/choosetheme.action","global themes theme customization custom layout space",false],
+	    ["Color Scheme","/wiki/admin/lookandfeel.action","color scheme colors customization custom space",false],
+	    ["PDF Layout ","/wiki/admin/flyingpdf/viewpdflayoutconfig.action","pdf layout formatting title page header footer space css",false],
+	    ["PDF Stylesheet","/wiki/admin/flyingpdf/viewpdfstyleconfig.action","pdf stylesheet export space css",false],
+	    ["Site Logo and Favicon","/wiki/admin/sitelogo/view-sitelogo.action","site logo favicon icon avatar title",false],
+	    ["Header and Footer","/wiki/admin/custompagecontent.action","header footer site look",false],
+	    ["Default Space Logo ","/wiki/admin/configuredefaultspacelogo.action","default space logo",false],
+	    ["Macro Usage","/wiki/admin/pluginusage.action","macro usage macros",false],
+	    ["Audit Log","/wiki/admin/auditlogging.action","audit log logs",false],
+	    ["Import Spaces","/wiki/admin/importspace/importconfluencespace.action","import space spaces xml export",false],
+	    ["Application Links","/wiki/plugins/servlet/applinks/listApplicationLinks","application links applications link",false],
+	    ["JIRA Macro Repair","/wiki/admin/jim-validator/view.action","jira macro repair",false],
+	    ["Application Navigator","/wiki/plugins/servlet/customize-application-navigator","application navigator links applications link quick access",false],
+	    ["Space Settings ","/wiki/spaces/viewspacesummary.action?key="+spaceKey,"space settings",true],
+	    ["Restrictions","/wiki/pages/listpermissionpages.action?key="+spaceKey,"restrictions restriction",true],
+	    ["Template","/wiki/pages/templates2/listpagetemplates.action?key="+spaceKey,"space template templates blueprint",true],
+	    ["Reorder pages","/wiki/pages/reorderpages.action?key="+spaceKey,"reorder page pages",true],
+	    ["Orphaned Pages","/wiki/pages/listorphanedpages.action?key="+spaceKey,"orphaned page pages",true],
+	    ["Undefined Pages","/wiki/pages/listundefinedpages.action?key="+spaceKey,"undefined page pages",true],
+	    ["Attachments","/wiki/spaces/listattachmentsforspace.action?key="+spaceKey,"attachment attachments space file files",true],
+	    ["Trash","/wiki/pages/viewtrash.action?key="+spaceKey,"trash deleted delete page restore",true],
+	    ["PDF Export","/wiki/spaces/exportspacewelcome.action?key="+spaceKey,"pdf export space",true],
+	    ["RSS Feed","/wiki/spaces/listrssfeeds.action?key="+spaceKey,"rss feed feeds space",true],
+	    ["Themes","/wiki/spaces/choosetheme.action?key="+spaceKey,"space theme themes",true],
+	    ["PDF Layout","/wiki/spaces/flyingpdf/viewpdflayoutconfig.action?key="+spaceKey,"space pdf layout",true],
+	    ["Stylesheet","/wiki/spaces/flyingpdf/viewpdfstyleconfig.action?key="+spaceKey,"space stylesheet",true],
+	    ["Header & Footer","/wiki/spaces/custompagecontent.action?key="+spaceKey,"header footer header and footer space",true],
+	    ["PDF Stylesheet","/wiki/spaces/flyingpdf/viewpdfstyleconfig.action?key="+spaceKey,"pdf stylesheet stylesheets",true],
+	    ["Integrations ","/wiki/spaces/listentitylinks.action?typeId=com.atlassian.applinks.api.application.confluence.ConfluenceSpaceEntityType&key="+spaceKey,"integrations space integration",true],
+	    ["App Links","/wiki/spaces/listentitylinks.action?typeId=com.atlassian.applinks.api.application.confluence.ConfluenceSpaceEntityType&key="+spaceKey,"application application links application link links space link",true],
+	    ["People","/people/search","people directory profiles",false],
+	    ["Recently Worked on","/wiki/my/recent-work","recently worked on recent last previous",false],
+	    ["Recently Visited","/wiki/my/recently-visited","recently visited recent view viewed",false],
+	    ["Drafts","/wiki/my/drafts","drafts sketch",false],
+	    ["Saved for Later","/wiki/my/saved-for-later","saved for later star starred bookmark bookmarked",false],
+	    ["Online help","https://confluence.atlassian.com/display/ConfCloud/","online help documentation",false],
+	    ["Recommended Updates Email ","/wiki/admin/dailysummary/admin.action","recommended updates notification email",false],
+	    ["Feed Builder","/wiki/dashboard/configurerssfeed.action","feed builder rss",false],
+	    ["Site Status","https://status.atlassian.com/","site status system down help",false],
+	    ["What's New","https://confluence.atlassian.com/cloud/blog","what's new blog post",false],
+	    ["Terms of Service ","http://www.atlassian.com/hosted/terms.jsp","terms service security legal privacy policy policies gdpr data",false],
+	    ["Privacy Policy","https://www.atlassian.com/legal/privacy-policy","privacy policy security legal policies gdpr data",false],
+	    ["Get the Mobile app","https://confluence.app.link/lXR9osLBRC","get the mobile app application",false]];
+}
+
+var modalOn = false;
 
 function orderResults(similarityObj){
 	var resultArray=[]
@@ -433,12 +455,11 @@ function orderResults(similarityObj){
 	return resultArray;
 }
 
-var modalOn = false;
-
 $( window ).on("load", function(){
 	$("head").append(quickActionsStyle);
 	$( window ).keypress(function( e ) {
 		if(e.charCode == 46 && !modalOn){
+			refreshLinks();
 			modalOn=true;
 			$("body").append(quickActionsModal);
 			$("#shifter-dialog").focus();
@@ -454,6 +475,9 @@ $( window ).on("load", function(){
 	                		var keyWords=links[i][2].split(" ");
 	                		var similarity=0;
 	                            for(var k=0; k<eachKeySearch.length; k++){
+	                            	if(!insideSpace && links[i][3]){
+	                            		break;
+	                            	}
 	                            	if(links[i][2].includes(eachKeySearch[k])){
 	                            		if(similarity<5){ //limit max similarity to 5
 	                            			similarity++;
