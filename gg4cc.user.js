@@ -4,6 +4,8 @@
 // @version      1.1
 // @description  quick_actions_for_confluence
 // @author       gtworkowski, halegra, nmarques
+// @downloadURL  https://github.com/guitw2/gg4cc/raw/master/gg4cc.user.js
+// @updateURL    https://github.com/guitw2/gg4cc/raw/master/gg4cc.user.js
 // @match        https://*.atlassian.net/wiki/*
 // @run-at       document-start
 // @grant        none
