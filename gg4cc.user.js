@@ -351,7 +351,7 @@ var quickActionsStyle=`
 
 var	spaceKey=null;
 var	insideSpace=false;
-
+var links =[];
 function refreshLinks(){
 
 	if(window.location.href.match("/spaces/(.+)/")){ //if inside a space, get the space key
@@ -377,7 +377,7 @@ function refreshLinks(){
 	    ["Global Templates and Blueprints ","/wiki/pages/templates2/listglobaltemplates.action","template pages spaces blueprint  global templates and blueprints ",false],
 	    ["Space Directory","/wiki/spacedirectory/view.action","space directory spaces",false],
 	    ["Delete Space (Current Space)","/wiki/spaces/removespace.action?key="+spaceKey,"delete space",true],
-	    ["Permissions (Current Space)","/wiki/spaces/spacepermissions.action?key="+spaceKey,"permissions permission ",true],
+	    ["Permissions (Current Space)","/wiki/spaces/spacepermissions.action?key="+spaceKey,"permissions permission space",true],
 	    ["Import Templates ","/wiki/admin/plugins/templatePackage/configurePlugin.action","import templates template",false],
 	    ["Export (Current Space)","/wiki/spaces/exportspacewelcome.action?key="+spaceKey,"export space",true],
 	    ["Manage apps","/wiki/plugins/servlet/upm?source=side_nav_manage_addons","manage apps marketplace add on add-on extension extension app integration integrations",false],
