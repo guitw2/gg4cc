@@ -490,7 +490,7 @@ $( window ).on("load", function(){
 	                else{
 	                	$("#list-results").html(`<li class="aui-list-item" role="option"><a class="aui-list-item-link" role="presentation" href="/wiki/admin/viewgeneralconfig.action" target="_blank">General Configuration</a></li>
 			            <li class="aui-list-item" role="option"><a class="aui-list-item-link" role="presentation" href="/wiki/admin/permissions/globalpermissions.action" target="_blank">Global Permissions</a></li>
-			            <li class="aui-list-item" role="option"><a class="aui-list-item-link" role="presentation" href="/wiki/admin/permissions/viewdefaultspacepermissions.action" target="_blank">Space Permissions</a></li>
+			            <li class="aui-list-item" role="option"><a class="aui-list-item-link" role="presentation" href="/wiki/admin/permissions/viewdefaultspacepermissions.action" target="_blank">Space Permissions (Global)</a></li>
 			            <li class="aui-list-item" role="option"><a class="aui-list-item-link" role="presentation" href="/admin/users" target="_blank">Users</a></li>
 			            <li class="aui-list-item" role="option"><a class="aui-list-item-link" role="presentation" href="/admin/groups" target="_blank">Groups</a></li>`)
 	                }
