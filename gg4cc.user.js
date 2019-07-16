@@ -3,10 +3,13 @@
 // @namespace    gg4cc
 // @version      1.1
 // @description  quick_actions_for_confluence
-// @author       gtworkowski, halegra, nmarques
+// @updateURl    https://github.com/guitw2/gg4cc/raw/master/gg4cc.user.js
 // @downloadURL  https://github.com/guitw2/gg4cc/raw/master/gg4cc.user.js
-// @updateURL    https://github.com/guitw2/gg4cc/raw/master/gg4cc.user.js
+// @author       gtworkowski, halegra, nmarques
+// @exclude      https://*.atlassian.net/wiki/*/edit*
+// @exclude      https://*.jira.com/wiki/*/edit*
 // @match        https://*.atlassian.net/wiki/*
+// @match        https://*.jira.com/wiki/*
 // @run-at       document-start
 // @grant        none
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
